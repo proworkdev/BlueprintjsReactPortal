@@ -1,9 +1,20 @@
 import React from "react";
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
 import { requesturl } from '../../common/constant'
-import TextField from 'material-ui/TextField';
 import axios from "axios";
+
+import {
+  Button,
+  Intent,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+  Alignment,
+  Text,
+  Icon,
+  InputGroup, Label
+} from "@blueprintjs/core";
+
 
 export class Login extends React.Component {
   constructor(props) {
@@ -13,7 +24,7 @@ export class Login extends React.Component {
       password: ''
     }
   }
-  
+
   // Handles navigation to Register Page
   register = () => {
     this.props.history.push("register");
@@ -42,34 +53,27 @@ export class Login extends React.Component {
   }
 
   render() {
+    const style = {
+      margin: 15,
+    };
     return (
-      <div className="login-page">
-        <AppBar
-          title="Login"
-        />
-        <div className="login login-div">
-          <TextField
-            floatingLabelText="Username"
-            onChange={(event, newValue) => this.setState({ username: newValue })}
-          />
-
-          <TextField
-            type="password"
-            floatingLabelText="Password"
-            onChange={(event, newValue) => this.setState({ password: newValue })}
-          />
-
-          <RaisedButton className="submit-btn" label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
-
-          <div className="login-register">
-            <button onClick={this.register}> Register Here </button>
-            </div>
-          </div>
-      </div>
+      <Text className="login-page">
+        <Navbar>
+          <NavbarGroup align={Alignment.LEFT}>
+            <Icon icon="log-in" iconSize={18} style={{ paddingRight: 5 }} intent={Intent.PRIMARY} />
+            <NavbarHeading>Login</NavbarHeading>
+            <NavbarDivider />
+          </NavbarGroup>
+        </Navbar>
+        <Text className="login login-div">
+          <Label text="Username"/>
+          <InputGroup type="text" value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })} />
+          <Label text="Password"/>
+          <InputGroup type="password" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
+          <Button text="Login" intent={Intent.SUCCESS} rightIcon="saved" style={style} onClick={(event) => this.handleClick(event)} />
+          <Button text="Register" intent={Intent.PRIMARY} rightIcon="edit" onClick={this.register} />
+        </Text>
+      </Text>
     );
   }
 }
-
-const style = {
-  margin: 15,
-};

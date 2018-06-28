@@ -1,11 +1,21 @@
-
 import React from "react";
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+
 import { requesturl } from '../../common/constant'
 import axios from "axios";
-import FlatButton from 'material-ui/FlatButton';
+import {
+  Button,
+  Intent,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+  Alignment,
+  Text,
+  Classes,
+  Icon,
+  InputGroup, Label
+} from "@blueprintjs/core";
+
 
 export class EditProfile extends React.Component {
   constructor(props) {
@@ -29,7 +39,7 @@ export class EditProfile extends React.Component {
       headers: { Authorization: localStorage.getItem("token") }
     };
     // API Request
-    axios.post(requesturl + 'api/v1/edit', payload, headers)
+     axios.post(requesturl + 'api/v1/edit', payload, headers)
       .then((response) => {
         if (response.data.status === 200) {
           localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -39,7 +49,7 @@ export class EditProfile extends React.Component {
       .catch(function (error) {
         alert("Changes could not be Saved")
         console.log(error);
-      });
+      }); 
   }
 
   // Handles Log Out Event
@@ -54,45 +64,35 @@ export class EditProfile extends React.Component {
   }
 
   render() {
-    const buttonStyle = {
-      backgroundColor: 'transparent',
-      color: 'white'
+    const style = {
+      margin: 15,
     };
-    const rightButtons = (
-      <div>
-        <FlatButton label="Log Out" style={buttonStyle} onClick={this.handleLogout} />
-      </div>
-    );
+    
     return (
-      <div className="login-page edit-profile">
-        <AppBar
-          title="Edit Profile"
-          iconElementRight={rightButtons}
-        />
-        <div className="container-fluid">
-          <div className="login-password">
-            <RaisedButton className="password-btn" label="Change Password" primary={true} style={style} onClick={this.changePassword} />
-          </div>
-
-          <div className="login">
-            <TextField
-              value={this.state.first_name}
-              floatingLabelText="First Name"
-              onChange={(event, newValue) => this.setState({ first_name: newValue })}
-            />
-            <TextField
-              value={this.state.last_name}
-              floatingLabelText="Last Name"
-              onChange={(event, newValue) => this.setState({ last_name: newValue })}
-            />
-            <RaisedButton className="submit-btn" label="Save Changes" primary={true} style={style} onClick={this.handleClick} />
-          </div>
-        </div>
-      </div>
+      <Text className="login-page edit-profile">
+        <Navbar>
+          <NavbarGroup align={Alignment.LEFT}>
+          <Icon icon="menu" iconSize={18} style={{ paddingRight: 5}}intent={Intent.PRIMARY} /> 
+            <NavbarHeading>Edit Profile</NavbarHeading>
+            <NavbarDivider />
+          </NavbarGroup>
+          <NavbarGroup align={Alignment.RIGHT}>
+            <Button intent={Intent.PRIMARY} rightIcon="log-out" className={Classes.MINIMAL} onClick={this.handleLogout} text="Log Out" />
+          </NavbarGroup>
+        </Navbar>
+        <Text className="container-fluid">
+          <Text className="login-password">
+            <Button text="Change Password" rightIcon="edit" intent={Intent.WARNING} style={style} onClick={this.changePassword} />
+          </Text>
+          <Text className="login">
+            <Label text="First Name"/>
+            <InputGroup type="text" value={this.state.first_name} onChange={(e) => this.setState({ first_name: e.target.value })} />
+            <Label text="Last Name"/>
+            <InputGroup type="text" value={this.state.last_name} onChange={(e) => this.setState({ last_name: e.target.value })} />
+            <Button text="Save Changes" intent={Intent.SUCCESS} rightIcon="saved" style={style} onClick={this.handleClick} />
+          </Text>
+        </Text>
+      </Text>
     );
   }
 }
-
-const style = {
-  margin: 15,
-};

@@ -1,11 +1,20 @@
-
 import React from "react";
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import { requesturl } from '../../common/constant'
 import axios from "axios";
-import FlatButton from 'material-ui/FlatButton';
+import {
+  Button,
+  Intent,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+  Alignment,
+  Text,
+  Classes,
+  Icon,
+  InputGroup, Label
+} from "@blueprintjs/core";
+
 
 export class Password extends React.Component {
   constructor(props) {
@@ -53,39 +62,29 @@ export class Password extends React.Component {
   }
 
   render() {
-    const buttonStyle = {
-      backgroundColor: 'transparent',
-      color: 'white'
+    const style = {
+      margin: 15,
     };
-    const rightButtons = (
-      <div>
-        <FlatButton label="Log Out" style={buttonStyle} onClick={this.handleLogout} />
-      </div>
-    );
     return (
-      <div className="login-page">
-        <AppBar
-          title="Change Password"
-          iconElementRight={rightButtons}
-        />
-        <div className="login">
-          <TextField
-            type="password"
-            floatingLabelText="New Password"
-            onChange={(event, newValue) => this.setState({ password: newValue })}
-          />
-          <TextField
-            type="password"
-            floatingLabelText="Confirm Password"
-            onChange={(event, newValue) => this.setState({ confirm: newValue })}
-          />
-          <RaisedButton className="submit-btn" label="Submit" primary={true} style={style} onClick={this.handleClick} />
-        </div>
-      </div>
+      <Text className="login-page">
+        <Navbar>
+          <NavbarGroup align={Alignment.LEFT}>
+            <Icon icon="menu" iconSize={18} style={{ paddingRight: 5 }} intent={Intent.PRIMARY} />
+            <NavbarHeading>Change Password</NavbarHeading>
+            <NavbarDivider />
+          </NavbarGroup>
+          <NavbarGroup align={Alignment.RIGHT}>
+            <Button intent={Intent.PRIMARY} rightIcon="log-out" className={Classes.MINIMAL} onClick={this.handleLogout} text="Log Out" />
+          </NavbarGroup>
+        </Navbar>
+        <Text className="login">
+          <Label text="New Password" />
+          <InputGroup type="password" onChange={(e) => this.setState({ password: e.target.value })} />
+          <Label text="Confirm Password" />
+          <InputGroup type="password" onChange={(e) => this.setState({ confirm: e.target.value })} />
+          <Button text="Save Changes" intent={Intent.SUCCESS} rightIcon="saved" style={style} onClick={this.handleClick} />
+        </Text>
+      </Text>
     );
   }
 }
-
-const style = {
-  margin: 15,
-};

@@ -1,8 +1,18 @@
 
 import React from "react";
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
+import {
+  Icon,
+  Intent,
+  Button,
+  Text,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+  Alignment,
+  Classes
+} from "@blueprintjs/core";
+
 
 export class Home extends React.Component {
   constructor() {
@@ -22,33 +32,28 @@ export class Home extends React.Component {
   }
 
   render() {
-    const buttonStyle = {
-      backgroundColor: 'transparent',
-      color: 'white'
+    const style = {
+      margin: 15,
     };
-    const rightButtons = (
-      <div>
-        <FlatButton label="Log Out" style={buttonStyle} onClick={this.handleLogout} />
-      </div>
-    );
     return (
-      <div className="home-page">
-          <AppBar
-            title="Home"
-            iconElementRight={rightButtons}
-          />
-          <div className="container"> 
-            <div className="inner"> 
-              <h1>Welcome to Home</h1>
-              <p> Click on the following button to Edit your Profile. </p>
-              <RaisedButton className="submit-btn" label="Edit Profile" primary={true} style={style} onClick={this.editProfile} />
-            </div>
-          </div>
-      </div>
+      <Text className="home-page">
+        <Navbar>
+          <NavbarGroup align={Alignment.LEFT}>
+            <Icon icon="menu" iconSize={18} style={{ paddingRight: 5 }} intent={Intent.PRIMARY} />
+            <NavbarHeading>Home</NavbarHeading>
+            <NavbarDivider />
+          </NavbarGroup>
+          <NavbarGroup align={Alignment.RIGHT}>
+            <Button intent={Intent.PRIMARY} rightIcon="log-out" className={Classes.MINIMAL} onClick={this.handleLogout} text="Log Out" />
+          </NavbarGroup>
+        </Navbar>
+        <Text className="login">
+          <h5> Welcome to Home </h5>
+          <p> Click on the following button to Edit your Profile. </p>
+          <Button text="Edit Profile" rightIcon="edit" intent={Intent.PRIMARY} onClick={this.editProfile} style={style} />
+        </Text>
+      </Text>
     );
   }
 }
 
-const style = {
-  margin: 15,
-};

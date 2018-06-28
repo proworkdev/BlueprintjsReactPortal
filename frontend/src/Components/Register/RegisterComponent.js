@@ -1,9 +1,18 @@
 import React from "react";
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import { requesturl } from '../../common/constant'
 import axios from "axios";
+import {
+  Button,
+  Intent,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+  Alignment,
+  Text,
+  Icon, Label, InputGroup
+} from "@blueprintjs/core";
+
 
 export class Register extends React.Component {
   constructor(props) {
@@ -44,43 +53,31 @@ export class Register extends React.Component {
   }
 
   render() {
+    const style = {
+      margin: 15,
+    };
     return (
-      <div className="login-page">
-        <AppBar
-          title="Register"
-        />
-        <div className="login page">
-          <TextField
-            type="text"
-            floatingLabelText="First Name"
-            onChange={(event, newValue) => this.setState({ first_name: newValue })}
-          />
-          <TextField
-            type="text"
-            floatingLabelText="Last Name"
-            onChange={(event, newValue) => this.setState({ last_name: newValue })}
-          />
-          <TextField
-            type="email"
-            floatingLabelText="Email"
-            onChange={(event, newValue) => this.setState({ email: newValue })}
-          />
-          <TextField
-            type="password"
-            floatingLabelText="Password"
-            onChange={(event, newValue) => this.setState({ password: newValue })}
-          />
-          <RaisedButton label="Submit" className="submit-btn" primary={true} style={style} onClick={this.handleClick} />
-
-          <div className="login-register">
-            <button onClick={this.login}> Login </button>
-          </div>
-        </div>
-      </div>
+      <Text className="login-page">
+        <Navbar>
+          <NavbarGroup align={Alignment.LEFT}>
+            <Icon icon="edit" iconSize={18} style={{ paddingRight: 5}}intent={Intent.PRIMARY} /> 
+            <NavbarHeading>Register</NavbarHeading>
+            <NavbarDivider />
+          </NavbarGroup>
+        </Navbar>
+        <Text className="login page">
+          <Label text="First Name"/>
+          <InputGroup type="text" value={this.state.first_name} onChange={(e) => this.setState({ first_name: e.target.value })} />
+          <Label text="Last Name"/>
+          <InputGroup type="text" value={this.state.last_name} onChange={(e) => this.setState({ last_name: e.target.value })} />
+          <Label text="Email"/>
+          <InputGroup type="email" value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
+          <Label text="Password"/>
+          <InputGroup type="password" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
+          <Button text="Register" intent={Intent.SUCCESS} rightIcon="saved" style={style} onClick={this.handleClick} />
+          <Button text="Login" intent={Intent.PRIMARY} rightIcon="log-in" onClick={this.login} />
+        </Text>
+      </Text>
     );
   }
 }
-
-const style = {
-  margin: 15,
-};
